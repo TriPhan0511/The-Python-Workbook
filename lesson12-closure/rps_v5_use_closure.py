@@ -15,8 +15,8 @@ def rps():
 
     # Define a function that implement the game
     def play_rps():
-        nonlocal player_wins
-        nonlocal python_wins
+        # nonlocal player_wins
+        # nonlocal python_wins
 
         # Define a class that extends the Enum class
         class RPS(Enum):
