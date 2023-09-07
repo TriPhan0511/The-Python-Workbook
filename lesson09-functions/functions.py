@@ -31,7 +31,7 @@
 # total = sum('a', 2)  # 3
 # print(total)
 
-# ======= RECEIVING AN UNKNOWN NUMBER OF ARGUMENTS =======
+# ======= RECEIVING AN UNKNOWN NUMBER OF ARGUMENTS (args) =======
 # def multiple_items(*args):
 #     print(args)
 #     print(type(args))  # <class 'tuple'>
@@ -41,7 +41,7 @@
 # # ('Dave', 'John', 'Sara')
 # # <class 'tuple'>
 
-# ======= RECEIVING AN UNKNOWN NUMBER OF KWARGUMENTS =======
+# ======= RECEIVING AN UNKNOWN NUMBER OF KEY WORD ARGUMENTS (kwargs) =======
 # def mult_named_items(**kwargs):
 #     print(kwargs)
 #     print(type(kwargs))  # <class 'dict'>

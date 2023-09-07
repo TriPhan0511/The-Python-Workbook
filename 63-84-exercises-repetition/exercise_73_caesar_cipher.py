@@ -90,6 +90,9 @@ def caesar_cipher(message, shift_amount):
 # message = 'ABC 0123456789 [] XYZ'  # 'DEF 0123456789 [] GHI'
 # message = 'abc 0123456789 [] XYZ'  # 'DEF 0123456789 [] GHI'
 message = 'abc 0123456789 [], yza'  # 'DEF 0123456789 [] GHI'
+# shift_amout = 24
+# shift_amout = 26
+# shift_amout = 25
 shift_amout = 3
 encryted_message = caesar_cipher(message, shift_amout)
 print(f'Encrypted message: {encryted_message}')
