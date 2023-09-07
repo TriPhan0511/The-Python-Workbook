@@ -108,5 +108,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    rock_paper_scissors = rps(args.name)
+    if not args.name or len(args.name.strip()) == 0:
+        rock_paper_scissors = rps()
+    else:
+        rock_paper_scissors = rps(args.name)
+
     rock_paper_scissors()
