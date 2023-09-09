@@ -63,7 +63,8 @@ def guess_number(name='Player'):
             elif play_again == 'y':
                 return play_game()
             else:
-                sys.exit(f'\n🎉🎉🎉🎉\nThank you for playing!\n\nBye {name}! 👋')
+                print(f'\n🎉🎉🎉🎉\nThank you for playing!\n\nBye {name}! 👋')
+                break
 
     return play_game
 
