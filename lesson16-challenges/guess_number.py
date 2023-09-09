@@ -1,243 +1,86 @@
-# def guess_number(name='Player'):
-#     def say_hello():
-#         print(f'Good evening, {name}!')
-#     return say_hello
-
-
-# if __name__ == '__main__':
-#     import argparse
-
-#     parser = argparse.ArgumentParser(
-#         description='Provide a personalized experience.')
-#     parser.add_argument('-n', '--name')
-#     args = parser.parse_args()
-
-#     game = guess_number(args.name)
-#     game()
-# ---------------------------------------------------------------
-
-
-##
-# Implement the game Rock Paper Scissors.
-#
-
-# import sys
-# import random
-# from enum import Enum
-
-
-# def rps(name='PlayerOne'):
-#     # Declare some variables
-#     game_count = 0
-#     player_wins = 0
-#     python_wins = 0
-
-#     # Define a function that implement the game
-#     def play_rps():
-#         nonlocal name
-#         # nonlocal player_wins
-#         # nonlocal python_wins
-
-#         # Define a class that extends the Enum class
-#         class RPS(Enum):
-#             ROCK = 1
-#             PAPER = 2
-#             SCISSORS = 3
-
-#         # Get input from the user
-#         player_choice = input(
-#             f'\n{name}, please enter... \n1 for Rock,\n2 for Paper,\n3 for Scissors:\n\n')
-#         if player_choice not in ['1', '2', '3']:
-#             print(f'{name}, please enter 1, 2, or 3.')
-#             return play_rps()
-#         player = int(player_choice)
-
-#         # Generate a random choice
-#         computer_choice = random.choice('123')
-#         computer = int(computer_choice)
-
-#         # Display the choices
-#         print(f"\n{name} chose {str(RPS(player)).replace('RPS.', '').title()}.")
-#         print(
-#             f"Python chose {str(RPS(computer)).replace('RPS.', '').title()}.\n")
-
-#         # Define a nested function that decides winner
-#         def decide_winner(player, computer):
-#             nonlocal name
-#             nonlocal player_wins
-#             nonlocal python_wins
-
-#             if player == 1 and computer == 3:
-#                 player_wins += 1
-#                 return f'🎉 {name}, you win!'
-#             elif player == 2 and computer == 1:
-#                 player_wins += 1
-#                 return f'🎉 {name}, you win!'
-#             elif player == 3 and computer == 2:
-#                 player_wins += 1
-#                 return f'🎉 {name}, you win!'
-#             elif player == computer:
-#                 return '😲 Tie game!'
-#             else:
-#                 python_wins += 1
-#                 return f'🐍 Python win!\nSorry! {name}..😢'
-
-#         # Display the result
-#         result = decide_winner(player, computer)
-#         print(result)
-
-#         nonlocal game_count
-#         game_count += 1
-
-#         print(f'\nGame count: {game_count}')
-#         print(f"{name}'s wins: {player_wins}")
-#         print(f'\nPython wins: {python_wins}')
-
-#         # Play again?
-#         print(f'\nPlay again, {name}?')
-#         while True:
-#             play_again = input('\nY for Yes or \nQ to Quit\n')
-#             play_again = play_again.lower()
-#             if play_again not in ['y', 'q']:
-#                 continue
-#             else:
-#                 break
-#         if play_again == 'y':
-#             return play_rps()
-#         else:
-#             print('\n🎉🎉🎉🎉🎉 ')
-#             print('Thank you for playing!\n')
-#             sys.exit(f'Bye {name}! 👋')
-
-#     return play_rps
-
-
-# if __name__ == '__main__':
-#     import argparse
-
-#     parser = argparse.ArgumentParser(
-#         description='Provides a personalized game experience.'
-#     )
-
-#     parser.add_argument(
-#         '-n', '--name', metavar='name',
-#         help='The name of the person playing the game.'
-#         # required=True, help='The name of the person playing the game.'
-#     )
-
-#     args = parser.parse_args()
-
-#     rock_paper_scissors = rps(args.name)
-#     rock_paper_scissors()
-# ---------------------------------------------------------------
-
-import sys
 import random
-from enum import Enum
+import sys
 
 
-def rps(name='PlayerOne'):
+def guess_number(name='Player'):
+    # Declare some variables
     game_count = 0
     player_wins = 0
-    python_wins = 0
+    computer_wins = 0
+    player_winning_percentage = 0
+    formatted_percentage = ''
 
-    def play_rps():
-        nonlocal name
-        nonlocal player_wins
-        nonlocal python_wins
+    def play_game():
 
-        class RPS(Enum):
-            ROCK = 1
-            PAPER = 2
-            SCISSORS = 3
+        # Get a choice from player
+        player_choice = input(
+            f'\n{name}, guess which number I\'m thinking of... 1, 2, or 3.\n\n')
+        if player_choice not in ['1', '2', '3']:
+            print(f'\n{name}, please enter 1, 2, or 3.')
+            return play_game()
+        player = int(player_choice)
 
-        playerchoice = input(
-            f"\n{name}, please enter... \n1 for Rock,\n2 for Paper, or \n3 for Scissors:\n\n")
+        # Generate a random choice
+        computer = int(random.choice('123'))
 
-        if playerchoice not in ["1", "2", "3"]:
-            print(f"{name}, please enter 1, 2, or 3.")
-            return play_rps()
+        # Display both of choices
+        print(f'\n{name}, you chose {player}.')
+        print(f'I was thinking about the number {computer}.')
 
-        player = int(playerchoice)
-
-        computerchoice = random.choice("123")
-
-        computer = int(computerchoice)
-
-        print(f"\n{name}, you chose {str(RPS(player)).replace('RPS.', '').title()}.")
-        print(
-            f"Python chose {str(RPS(computer)).replace('RPS.', '').title()}.\n"
-        )
-
-        def decide_winner(player, computer):
-            nonlocal name
-            nonlocal player_wins
-            nonlocal python_wins
-            if player == 1 and computer == 3:
-                player_wins += 1
-                return f"🎉 {name}, you win!"
-            elif player == 2 and computer == 1:
-                player_wins += 1
-                return f"🎉 {name}, you win!"
-            elif player == 3 and computer == 2:
-                player_wins += 1
-                return f"🎉 {name}, you win!"
-            elif player == computer:
-                return "😲 Tie game!"
-            else:
-                python_wins += 1
-                return f"🐍 Python wins!\nSorry, {name}..😢"
-
-        game_result = decide_winner(player, computer)
-
-        print(game_result)
-
+        # Make the variables be able to be modified
         nonlocal game_count
-        game_count += 1
+        nonlocal player_wins
+        nonlocal computer_wins
+        nonlocal player_winning_percentage
+        nonlocal formatted_percentage
 
-        print(f"\nGame count: {game_count}")
-        print(f"\n{name}'s wins: {player_wins}")
-        print(f"\nPython wins: {python_wins}")
+        # Game logic
+        if player == computer:
+            player_wins += 1
+            print(f'\n🎉 {name}, you win!')
 
-        print(f"\nPlay again, {name}?")
-
-        while True:
-            playagain = input("\nY for Yes or \nQ to Quit\n")
-            if playagain.lower() not in ["y", "q"]:
-                continue
-            else:
-                break
-
-        if playagain.lower() == "y":
-            return play_rps()
         else:
-            print("\n🎉🎉🎉🎉")
-            print("Thank you for playing!\n")
-            sys.exit(f"Bye {name}! 👋")
+            computer_wins += 1
+            print(f'\nSorry, {name}. Better luck next time. 😢')
 
-    return play_rps
+        # Statistics
+        game_count += 1
+        formatted_percentage = f'{(player_wins / game_count):.2%}'
+        if formatted_percentage[-3] == '0':
+            formatted_percentage = f'{formatted_percentage[:-4]}%'
+        print(f'\nGame count: {game_count}')
+        print(f"\n{name}'s wins: {player_wins}")
+        print(f'\nYour winning percentage: {formatted_percentage}')
+
+        # Play again
+        while True:
+            print(f'\nPlay again, {name}?')
+            play_again = input('\nY for Yes or\nQ to Quit\n')
+            play_again = play_again.lower()
+            if play_again not in ['y', 'q']:
+                print(f'\n{name}, please enter Y or Q.')
+                continue
+            elif play_again == 'y':
+                return play_game()
+            else:
+                sys.exit(f'\n🎉🎉🎉🎉\nThank you for playing!\n\nBye {name}! 👋')
+
+    return play_game
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Provides a personalized game experience."
-    )
-
-    parser.add_argument(
-        "-n", "--name", metavar="name",
-        help="The name of the person playing the game."
-        # required=True, help="The name of the person playing the game."
-    )
-
+        description='Provides a personalized game experience.')
+    parser.add_argument('-n', '--name', metavar='name',
+                        help='The name of the person playing the game.')
     args = parser.parse_args()
 
-    # rock_paper_scissors = rps(args.name)
-    # rock_paper_scissors()
-
-    if not args.name or len(args.name.strip()) == 0:
-        rock_paper_scissors = rps()
+    if not args.name:
+        game = guess_number()
     else:
-        rock_paper_scissors = rps(args.name)
-    rock_paper_scissors()
+        game = guess_number(args.name)
+
+    # Play game
+    game()
