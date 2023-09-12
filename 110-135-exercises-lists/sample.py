@@ -12,7 +12,7 @@
 # executes it will display all of the values in the list. Those values are 2.71, 3.14, 2.30
 # and 1.62.
 
-# 5.2 Loops and Lists
+# ======= 5.2 Loops and Lists =======
 
 # A for loop executes once for each item in a collection. The collection can be a
 # range of integers constructed by calling the range function. It can also be a list.
@@ -37,7 +37,7 @@
 # print(val1 + val2)
 
 
-# 5.3 Additional List Operations
+# ======= 5.3 Additional List Operations =======
 # Lists can grow and shrink as a program runs. A new element can be inserted at
 # any location in the list, and an element can be deleted based on its value or its
 # index. Python also provides mechanisms for determining whether or not an element
@@ -58,7 +58,7 @@
 # another method or function call, or used as part of a calculation, just like the result
 # returned by a function.
 
-# 5.3.1 Adding Elements to a List (methods: append, insert)
+# ======= 5.3.1 Adding Elements to a List (methods: append, insert) =======
 
 # Elements can be added to the end of an existing list by calling the append method. It
 # takes one argument, which is the element that will be added to the list. For example,
@@ -84,7 +84,7 @@
 # data.insert(2, 2.3)
 # print(data)  # [2.71, 3.14, 2.3, 1.41, 1.62]
 
-# 5.3.2 Removing Elements froma List (methods: pop, remove)
+# ======= 5.3.2 Removing Elements froma List (methods: pop, remove) =======
 
 # The pop method is used to remove an element at a particular index from a list.
 # The index of the element to remove is provided as an optional argument to pop. If
@@ -115,7 +115,7 @@
 # print(last)  # 1.41
 # print(data)  # [2.71, 3.14]
 
-# 5.3.3 Rearranging the Elements in a List (methods: reverse, sort)
+# ======= 5.3.3 Rearranging the Elements in a List (methods: reverse, sort) =======
 
 # Sometimes a list has all of the correct elements in it, but they aren’t in the order
 # needed to solve a particular problem. Two elements in a list can be swapped using
@@ -147,24 +147,139 @@
 # The following example reads a collection of numbers from the user and stores
 # them in a list. Then it displays all of the values in sorted order.
 
-def get_numbers_and_sort():
-    numbers = []
-    while True:
-        num = input('Enter a number (blank line to quit):\n')
-        if not num or len(num.strip()) == 0:
-            break
-        num = float(num)
-        numbers.append(num)
-    if len(numbers) > 0:
-        # Ascending order
-        # numbers.sort()
+# def get_numbers_and_sort():
+#     numbers = []
+#     while True:
+#         num = input('Enter a number (blank line to quit):\n')
+#         if not num or len(num.strip()) == 0:
+#             break
+#         num = float(num)
+#         numbers.append(num)
+#     if len(numbers) > 0:
+#         # Ascending order
+#         # numbers.sort()
 
-        # Descending order
-        numbers.sort()
-        numbers.reverse()
-        print(numbers)
-    else:
-        print('Empty list!')
+#         # Descending order
+#         numbers.sort()
+#         numbers.reverse()
+#         print(numbers)
+#     else:
+#         print('Empty list!')
 
 
-get_numbers_and_sort()
+# get_numbers_and_sort()
+
+# ======= 5.3.4 Searching a List  (Python's in operator and index medthod) =======
+
+# Sometimes we need to determine whether or not a particular value is present in a list.
+# In other situations, we might want to determine the index of a value that is already
+# known to be present in a list. Python’s in operator and index method allow us to
+# perform these tasks.
+
+# The in operator is used to determine whether or not a value is present in a list.
+# The value that is being searched for is placed to the left of the operator. The list that
+# is being searched is placed to the operator’s right. Such an expression evaluates to
+# True if the value is present in the list. Otherwise it evaluates to False.
+
+# The index method is used to identify the position of a particular value within
+# a list. This value is passed to index as its only argument. The index of the first
+# occurrence of the value in the list is returned as the method’s result. It is an error to
+# call the index method with an argument that is not present in the list. As a result,
+# programmers sometimes use the in operator to determine whether or not a value is
+# present in a list and then use the index method to determine it’s location.
+
+# The following example demonstrates several of the methods and operators introduced
+# in this section. It begins by reading integers from the user and storing them
+# in a list. Then one additional integer is read from the user. The position of the first
+# occurrence of this additional integer in the list of values is reported (if it is present).
+# An appropriate message is displayed if the additional integer is not present in the list
+# of values entered by the user.
+
+
+# def get_numbers_and_search():
+#     numbers = []
+#     while True:
+#         num = input('Enter a number (blank line to finish):\n')
+#         if not num or len(num.strip()) == 0:
+#             break
+#         num = int(num)
+#         numbers.append(num)
+#     print(f'Test - numbers: {numbers}')  # Test
+
+#     searched_number = int(input('\n\nEnter a number for searching:\n'))
+
+#     if not searched_number in numbers:
+#         print(f'{searched_number} does not exists in {numbers}.')
+#     else:
+#         print(
+#             f'The position of the first occurence of {searched_number} in list is: {numbers.index(searched_number)}')
+
+
+# get_numbers_and_search()
+
+# ======= 5.4 Lists as Return Values and Arguments =======
+
+# Lists can be returned from functions. Like values of other types, a list is returned
+# from a function using the return keyword. When the return statement executes,
+# the function terminates and the list is returned to the location where the function was
+# called. Then the list can be stored in a variable or used in a calculation.
+
+# Lists can also be passed as arguments to functions. Like values of other types, any
+# lists being passed to a function are included inside the parentheses that follow the
+# function’s name when it is called. Each argument, whether it is a list or a value of
+# another type, appears in the corresponding parameter variable inside the function.
+
+# Parameter variables that contain lists can be used in the body of a function just like
+# parameter variables that contain values of other types. However, unlike an integer,
+# floating-point number, string or Boolean value, changes made to a list parameter
+# variable can impact the argument passed to the function, in addition to the value
+# stored in the parameter variable. In particular, a change made to a list using a method
+# (such as append, pop or sort) will change the value of both the parameter variable
+# and the argument that was provided when the function was called.
+
+# def insert_at_the_end(t):
+#     t.append(1000)
+
+
+# numbers = [1, 2, 3]
+
+# insert_at_the_end(numbers)
+
+# print(numbers)  # [1, 2, 3, 1000]
+
+# Updates performed on individual list elements (where the name of the list, followed
+# by an index enclosed in square brackets, appears on the left side of an assignment
+# operator) also modify both the parameter variable and the argument that was
+# provided when the functionwas called. However, assignments to the entire list (where
+# only the name of the list appears to the left of the assignment operator) only impact
+# the parameter variable. Such assignments do not impact the argument provided when
+# the function was called.
+
+# def update_the_first_element(t):
+#     t[0] = 1000
+
+
+# numbers = [1, 2, 3]
+
+# update_the_first_element(numbers)
+
+# print(numbers)  # [1000, 2, 3]
+
+# -----------------------------------
+
+# def another_update(t):
+#     t = [400, 500, 600]
+#     t[0] = 1000
+
+
+# numbers = [1, 2, 3]
+
+# another_update(numbers)
+# print(numbers)  # [1, 2, 3]
+
+# The differences in behavior between list parameters and parameters of other
+# types may seem arbitrary, as might the choice to have some changes apply to both
+# the parameter variable and the argument while others only change the parameter
+# variable. However, this is not the case. There are important technical reasons for
+# these differences, but those details are beyond the scope of a brief introduction to
+# Python.
