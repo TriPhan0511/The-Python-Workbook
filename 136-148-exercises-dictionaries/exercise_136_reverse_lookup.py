@@ -12,13 +12,13 @@
 # program.
 
 def reverseLookup(data, value):
-    keys = []
+    results = []
     if not isinstance(data, dict):
         return
     for k, v in data.items():
         if v == value:
-            keys.append(k)
-    return keys
+            results.append(k)
+    return results
 
 
 def main():
