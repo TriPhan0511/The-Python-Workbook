@@ -33,3 +33,68 @@
 # code to the province or territory name. Display a meaningful error message if the
 # postal code begins with an invalid character, or if the second character in the postal
 # code is not a digit.
+
+
+POSTAL_CODES = {
+    'A': 'Newfoundland',
+    'B': 'Nova Scotia',
+    'C': 'Prince Edward Island',
+    'E': 'New Brunswick',
+    'G': 'Quebec',
+    'H': 'Quebec',
+    'J': 'Quebec',
+    'K': 'Ontario',
+    'L': 'Ontario',
+    'M': 'Ontario',
+    'N': 'Ontario',
+    'P': 'Ontario',
+    'R': 'Manitoba',
+    'S': 'Saskatchewan',
+    'T': 'Alberta',
+    'V': 'British Columbia',
+    'X': 'Nunavut or Northwest Territories',
+    'Y': 'Yukon',
+}
+
+
+def parse_postal_code(code):
+    if len(code) < 7:
+        print('Invalid postal code. A postal code should have 6 characters and a space between each three characters.')
+        return
+
+    first = code[:1].upper()
+    second = code[1:2]
+
+    if first not in POSTAL_CODES:
+        print('Invalid postal code. A postal code should begin with a valid letter.')
+        return
+    if not second.isdigit():
+        print(
+            'Invalid postal code. The second character in a postal code should be a number.')
+        return
+
+    province = POSTAL_CODES[first]
+    rural_or_urban = 'rural' if int(second) == 0 else 'urban'
+
+    return (province, rural_or_urban)
+
+
+def main():
+    while True:
+        line = input('Enter a postal code:\n')
+        if not line.strip():
+            print('You should enter a valid postal code.')
+            continue
+        else:
+            result = parse_postal_code(line)
+            if result == None:
+                continue
+            else:
+                break
+    print(f'The postal code is for an {result[1]} address in {result[0]}.')
+
+
+# T2N 1N4
+# X0A 1B2
+if __name__ == '__main__':
+    main()
