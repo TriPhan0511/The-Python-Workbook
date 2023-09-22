@@ -8,61 +8,33 @@
 
 import sys
 
-NUM_LINES = 5
+MAX_LINES = 10
 
 
-def display_the_head_of_a_file(file_name):
+def head(file_name, max_lines):
     try:
         fhand = open(file_name)
-        result = ''
-        for i in range(NUM_LINES):
-            result += fhand.readline()
-        return result
-    except FileNotFoundError:
-        print('\nFile cannot be found.')
+    except:
+        print(f'File cannot be opened: {file_name}')
+        exit()
+
+    count = 0
+    for line in fhand:
+        if count == max_lines:
+            break
+        print(line.strip())
+        count += 1
+    fhand.close()
 
 
 def main():
     args = sys.argv
+    # Verify that exactly one command line argument (in addition to the .py file) was provided
     if len(args) != 2:
-        print('\nA file name must be provided!')
-    else:
-        result = display_the_head_of_a_file(args[1])
-        if result != None:
-            if len(result) == 0:
-                print(f'\nThe file "{args[1]}" is empty')
-            else:
-                print(result)
+        print('Please provide the file name as a command line argument.')
+        exit()
+    head(args[1], MAX_LINES)
 
 
 if __name__ == '__main__':
     main()
-
-
-# Test:
-
-# Case 1:
-# $ py exercise_149_display_the_head_of_a_file.py
-# -> A file name must be provided!
-
-# Case 2:
-# $ py exercise_149_display_the_head_of_a_file.py abnc
-# -> File cannot be found.
-
-# Case 3
-# $ py exercise_149_display_the_head_of_a_file.py empty_file.txt
-# ->The file "empty_file.txt" is empty
-
-# Case 4:
-# $ py exercise_149_display_the_head_of_a_file.py ex149.txt
-# ->
-# Line one
-# Line two
-# Line three
-# Line four
-# Line five
-# Line six
-# Line seven
-# Line eight
-# Line nine
-# Line ten
