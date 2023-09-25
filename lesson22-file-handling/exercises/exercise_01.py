@@ -12,11 +12,23 @@
 # SAT, 05 JAN 2008 09:14:16 -0500
 #
 
+import os
+
+
+def get_full_path(file_name):
+    absolute_path = os.path.dirname(__file__)
+    relative_path = ''
+    # relative_path = 'src/lib'
+    full_path = os.path.join(absolute_path, relative_path)
+    return f'{full_path}/{file_name}'
+
+
 def upper_and_print():
     while True:
         file_name = input('\nEnter a file name:\n')
         try:
-            fhand = open(file_name)
+            fhand = open(get_full_path(file_name))
+            # fhand = open(file_name)
         except FileNotFoundError:
             print(f'\nThe file was not found.\nPlease enter another file name.')
             continue

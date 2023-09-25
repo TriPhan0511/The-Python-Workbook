@@ -1,23 +1,39 @@
+import os
+
+
+def get_full_path(file_name):
+    # This function returns the path of the file
+    absolute_path = os.path.dirname(__file__)
+    relative_path = ''
+    # relative_path = 'src/lib'
+    full_path = os.path.join(absolute_path, relative_path)
+    return f'{full_path}/{file_name}'
+
 # ======= Reading files =======
 
+
+fhand = open(get_full_path('mbox-short.txt'))
+# fhand = open(get_full_path('mbox-short.txt'))
 # fhand = open('mbox-short.txt')
-# count = 0
-# for line in fhand:
-#     count += 1
-# print(f'Line Count: {count}')
-# # Line Count: 1910
+count = 0
+for line in fhand:
+    count += 1
+print(f'Line Count: {count}')
+# Line Count: 1910
 
 
+fhand = open(get_full_path('mbox-short.txt'))
 # fhand = open('mbox-short.txt')
-# inp = fhand.read()  # Read the whole file into a string
-# print(type(inp))  # <class 'str'>
-# print(len(inp))  # 94626
-# print(inp[:20])  # From stephen.marquar
+inp = fhand.read()  # Read the whole file into a string
+print(type(inp))  # <class 'str'>
+print(len(inp))  # 94626
+print(inp[:20])  # From stephen.marquar
 
 
 # ======= Searching through a file =======
 
-# fhand = open('mbox-short.txt')
+# fhand = open(get_full_path('mbox-short.txt'))
+# # fhand = open('mbox-short.txt')
 # for line in fhand:
 #     line = line.rstrip()
 #     if not line.startswith('From:'):
@@ -25,7 +41,8 @@
 #     print(line)
 
 
-# fhand = open('mbox-short.txt')
+# fhand = open(get_full_path('mbox-short.txt'))
+# # fhand = open('mbox-short.txt')
 # for line in fhand:
 #     if line.find('@uct.ac.za') == -1:
 #         continue
