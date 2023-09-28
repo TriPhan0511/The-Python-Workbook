@@ -77,9 +77,15 @@ class Employee:
 def main():
     employees = [
         Employee('John', 'IT', 28),
-        Employee(),
-        Employee(),
+        Employee('Sam', 'Banking', 20),
+        Employee('Joe', 'Finance', 25),
     ]
+
+    sorted_by_name = sorted(employees, key=attrgetter('name'))
+    # sorted_by_name = sorted(employees, key=lambda x: x.name)
+
+    # Output: [{ Joe Finance 25 }, { John IT 28 }, { Sam Banking 20 }]
+    print(sorted_by_name)
 
 
 if __name__ == '__main__':
