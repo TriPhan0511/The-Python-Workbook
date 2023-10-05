@@ -24,7 +24,7 @@ def get_context():
 
 
 # Get all specific tags within an url
-def get_tags(url, tag_type='a'):
+def get_tags(url, tag_str='a'):
     # Ignore SSL certificate errors
     ctx = get_context()
     # Open the web page, read the data
@@ -32,7 +32,7 @@ def get_tags(url, tag_type='a'):
     html = urlopen(url, context=ctx).read()
     soup = BeautifulSoup(html, 'html.parser')
     # Retrieve all of the tags
-    tags = soup(tag_type)
+    tags = soup(tag_str)
 
     return tags
 
@@ -46,12 +46,14 @@ def get_links(url):
     return result
 
 # Result:
+# [
 # https://www.python.org/
 # download.html
 # https://docs.python.org/3.13/
 # https://docs.python.org/3.12/
 # #
 # ...
+# ]
 
 
 # Pull out various parts of each tag
