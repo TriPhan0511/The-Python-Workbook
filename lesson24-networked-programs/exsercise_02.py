@@ -32,24 +32,43 @@ def get_socket(url):
     return my_sock
 
 
-def display_text(url, limit):
-    my_sock = get_socket(url)
+def get_and_count_text(url):
+    try:
+        my_sock = get_socket(url)
+    except:
+        print(f'Can not open connection to {url}')
+        exit()
     count = 0
     info = b''
     while True:
-        data = my_sock.recv(limit)
+        try:
+            data = my_sock.recv(5120)
+        except:
+            print('Something went wrong when receiving data.')
+            exit()
         if len(data) < 1:
             break
+        info += data
         count += len(data)
-        if count <= limit:
-            info += data
-    print(f'\n***** The first {limit} characters: *****\n')
-    print(info.decode())
-    print(f'\n***** Received {count} characters in total. *****')
-
-    print(len(info))
-
     my_sock.close()
+    return (info.decode(), count)
+
+
+def display_text(url, limit):
+    (info, count) = get_and_count_text(url)
+
+    # # The first {limit} characters in the doument
+    # print(f'\n***** The first {limit} characters in the doument: *****\n')
+    # print(info[:limit])
+
+    # The first {limit} characters after headers in the doument
+    print(
+        f'\n***** The first {limit} characters after headers in the doument: *****\n')
+    pos = info.find('\r\n\r\n')
+    info = info[pos+4:]
+    print(info[:limit])
+
+    print(f'\n***** Received {count} characters in total. *****')
 
 
 def main():
