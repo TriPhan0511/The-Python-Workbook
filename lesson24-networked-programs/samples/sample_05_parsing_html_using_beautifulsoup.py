@@ -1,6 +1,3 @@
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-import ssl
 
 # #
 # Parsing HTML using BeautifulSoup
@@ -14,6 +11,10 @@ import ssl
 # and passes the data to the BeautifulSoup parser, and then retrieves all of the
 # anchor tags and prints out the href attribute for each tag.
 
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import ssl
+
 
 # Get context (Ignore SSL certificate errors)
 def get_context():
@@ -25,35 +26,20 @@ def get_context():
 
 # Get all specific tags within an url
 def get_tags(url, tag_str='a'):
-    # Ignore SSL certificate errors
     ctx = get_context()
-    # Open the web page, read the data
-    # and pass the data to the Beautiful parser
     html = urlopen(url, context=ctx).read()
     soup = BeautifulSoup(html, 'html.parser')
     # Retrieve all of the tags
-    tags = soup(tag_str)
-
-    return tags
+    return soup(tag_str)
 
 
-# Get urls in anchor tags
+# Get links in anchor tags
 def get_links(url):
     tags = get_tags(url, 'a')
     result = []
     for tag in tags:
         result.append(tag.get('href', None))
     return result
-
-# Result:
-# [
-# https://www.python.org/
-# download.html
-# https://docs.python.org/3.13/
-# https://docs.python.org/3.12/
-# #
-# ...
-# ]
 
 
 # Pull out various parts of each tag
@@ -66,23 +52,6 @@ def pull_out_various_parts(url):
             print(f"Contents: {tag.contents[0]}")
         print(f"Attributes: {tag.attrs}")
         print('----------------------------------')
-
-# Output:
-# TAG: <a class="nav-logo" href="https://www.python.org/">
-# <img alt="Logo" src="_static/py.svg"/>
-# </a>
-# URL: https://www.python.org/
-# Contents:
-
-# Attributes: {'href': 'https://www.python.org/', 'class': ['nav-logo']}
-# class: ['nav-logo']
-# ----------------------------------
-# TAG: <a href="download.html">Download these documents</a>
-# URL: download.html
-# Contents: Download these documents
-# Attributes: {'href': 'download.html'}
-# ----------------------------------
-# ...
 
 
 def main():

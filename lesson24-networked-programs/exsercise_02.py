@@ -1,26 +1,27 @@
-import socket
-import re
-
 # #
 # Exercise 2: Change your socket program so that it counts the number
 # of characters it has received and stops displaying any text after it has
 # shown 3000 characters. The program should retrieve the entire docu-
 # ment and count the total number of characters and display the count
 # of the number of characters at the end of the document.
+
+# Sample url:
+# 'http://data.pr4e.org/romeo-full.txt'
 #
 
+import socket
+import re
+from utilities import validate_url, get_file_name_from_url, get_full_path, overwrite
 
-def get_socket(url):
-    url = url.strip()
-    if not re.search('^http[s]?://.+', url):
-        print('The entered link is not an improperly formatted url.')
-        return
+
+def get_socket(url, port=80):
+    if not validate_url(url):
+        exit()
+
+    # Get host from url
     words = url.split('/')
-    if len(words) < 4:
-        print('Wrong input')
-        return
     host = words[2]
-    port = 80
+
     try:
         my_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         my_sock.connect((host, port))
@@ -32,43 +33,47 @@ def get_socket(url):
     return my_sock
 
 
-def get_and_count_text(url):
+def count_and_save(url, limit):
     try:
         my_sock = get_socket(url)
     except:
         print(f'Can not open connection to {url}')
         exit()
+
+    file_name = get_file_name_from_url(url)
+    file_name = get_full_path(file_name)
+
+    # Don't overwrite the file
+    if not overwrite(file_name):
+        exit()
+
     count = 0
     info = b''
+    displayed = False
+    fout = open(file_name, 'wb')
     while True:
         try:
+            # data = my_sock.recv(512)
             data = my_sock.recv(5120)
         except:
             print('Something went wrong when receiving data.')
             exit()
         if len(data) < 1:
             break
-        info += data
+        fout.write(data)
         count += len(data)
+        if len(info) >= limit and not displayed:
+            print(
+                f'\n***** The first {limit} characters in the doument: *****\n')
+            print(info[:limit].decode())
+            displayed = True
+        else:
+            info += data
+
     my_sock.close()
-    return (info.decode(), count)
-
-
-def display_text(url, limit):
-    (info, count) = get_and_count_text(url)
-
-    # # The first {limit} characters in the doument
-    # print(f'\n***** The first {limit} characters in the doument: *****\n')
-    # print(info[:limit])
-
-    # The first {limit} characters after headers in the doument
-    print(
-        f'\n***** The first {limit} characters after headers in the doument: *****\n')
-    pos = info.find('\r\n\r\n')
-    info = info[pos+4:]
-    print(info[:limit])
-
+    fout.close()
     print(f'\n***** Received {count} characters in total. *****')
+    print(f'\n***** A text file was saved. *****')
 
 
 def main():
@@ -77,9 +82,12 @@ def main():
     # url = 'http://data.pr4e.org'
     # url = 'http://data.pr4e.org/romeo.txt'
     url = 'http://data.pr4e.org/romeo-full.txt'
+    # limit = 100
     limit = 3000
 
-    display_text(url, limit)
+    # display_text(url, limit)
+
+    count_and_save(url, limit)
 
 
 if __name__ == '__main__':

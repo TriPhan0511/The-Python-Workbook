@@ -1,6 +1,3 @@
-import os
-from urllib.request import urlopen
-
 # #
 # Exercise 3: Use urllib to replicate the previous exercise of (1) retrieving
 # the document from a URL, (2) displaying up to 3000 characters, and
@@ -9,55 +6,42 @@ from urllib.request import urlopen
 # characters of the document contents.
 #
 
-
-def get_full_path(file_name):
-    return f'{os.path.dirname(__file__)}/{file_name}'
-
-
-def get_file_name(url):
-    # Get the last "word"
-    words = url.strip().split('/')
-    return words[-1]
+from urllib.request import urlopen
+from utilities import overwrite, get_full_path, get_file_name_from_url
 
 
-def save_text_file(url):
+def count_and_save(url, limit):
     try:
         fhand = urlopen(url)
     except:
         print(f'Something went wrong when connecting to {url}')
         exit()
-    file_name = get_file_name(url)
-    fout = open(get_full_path(file_name), 'w')
-    while True:
-        data = fhand.read(100000)
-        if len(data) < 1:
-            break
-        fout.write(data.decode().strip())
+
+    file_name = get_file_name_from_url(url)
+    file_name = get_full_path(file_name)
+
+    # Don't overwrite the file
+    if not overwrite(file_name):
+        exit()
+
+    fout = open(file_name, 'wb')
+    count = 0
+    info = b''
+    displayed = False
+    for line in fhand:
+        fout.write(line)
+        count += len(line)
+        if len(info) >= limit and not displayed:
+            print(
+                f'\n***** The first {limit} characters in the doument: *****\n')
+            print(info[:limit].decode())
+            displayed = True
+        else:
+            info += line
+
     fout.close()
-    print('A text file was saved.')
-    # return (info.decode(), len(info))
-
-# def get_and_count_text(url):
-#     try:
-#         f = urlopen(url)
-#     except:
-#         print(f'Something went wrong when connecting to {url}')
-#         exit()
-#     info = b''
-#     while True:
-#         data = f.read(100000)
-#         if len(data) < 1:
-#             break
-#         info += data
-#     return (info.decode(), len(info))
-
-
-def display_text(url, limit):
-    (info, count) = save_text_file(url)
-    print(
-        f'\n***** The first {limit} characters of the doument contents: *****\n')
-    print(info[:limit])
     print(f'\n***** Received {count} characters in total. *****')
+    print(f'\n***** A text file was saved. *****')
 
 
 def main():
@@ -66,11 +50,10 @@ def main():
     # url = 'http://data.pr4e.org'
     # url = 'http://data.pr4e.org/romeo.txt'
     url = 'http://data.pr4e.org/romeo-full.txt'
+    # limit = 100
     limit = 3000
 
-    # display_text(url, limit)
-
-    save_text_file(url)
+    count_and_save(url, limit)
 
 
 if __name__ == '__main__':
